@@ -33,8 +33,8 @@ const TodoSlice = createSlice({
     name:'todos',
     initialState,
     reducers:{},
-    extraReducers:(builders)=>{
-        builders
+    extraReducers:(builder)=>{
+        builder
         .addCase(getTodo.pending, (state, action)=>{
             state.todoLoading = true
         })

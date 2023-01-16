@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTodo, deleteTodo } from './redux/TodoSlice';
 
 const Home = () => {
-    const [fatchData, setFatchData] = useState([]);
+    const [fatchData, setFatchData] = useState(false);
 
     const dispatch = useDispatch();
     const { todos, todoLoading } = useSelector(state => state.todo)
