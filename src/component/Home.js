@@ -1,55 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getTodo } from './redux/TodoSlice';
-
+import { getTodo, deleteTodo } from './redux/TodoSlice';
 
 const Home = () => {
-    const [fatchBooks, setfatchBooks] = useState(false);
+    const [fatchData, setFatchData] = useState([]);
 
     const dispatch = useDispatch();
-    const {todos, todoLoading} = useSelector(state => state.todo);
+    const { todos, todoLoading } = useSelector(state => state.todo)
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getTodo())
-    }, [fatchBooks])
+    }, [fatchData])
 
-  return (
-    <>
-        {
-            todoLoading ? 'Data Loading...' :
-            <>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>S.No.</th>
-                            <th>First Name </th>
-                            <th>Last Name</th>
-                            <th>Email Id</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        todos.map((item, index)=>{
-                            return(
-                                <tr key={index}>
-                                    <td>{item.id}</td>
-                                    <td>{item.first_name}</td>
-                                    <td>{item.last_name}</td>
-                                    <td>{item.email}</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                </table>
-            </>
-        }
-    </>
-  )
+    const deleteHandler = (id) => {
+        dispatch(deleteTodo(id));
+    }
+    //console.log()
+
+    return (
+        <>
+            {todoLoading ? 'todoLoading...' :
+                <>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>email</th>
+                                <th>first_name</th>
+                                <th>last_name</th>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                todos.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.id}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.first_name}</td>
+                                        <td>{item.last_name}</td>
+                                        <td><button className='btn btn-primary'>Edit</button></td>
+                                        <td><button className='btn btn-danger' onClick={() => deleteHandler(item.id) }>Delete</button></td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </>
+            }
+
+
+        </>
+    )
 }
 
 export default Home
